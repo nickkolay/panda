@@ -48,7 +48,7 @@ static int ford_rx_hook(CANPacket_t *to_push) {
   bool valid = addr_safety_check(to_push, &ford_rx_checks, NULL, NULL, NULL);
 
   if (valid && (GET_BUS(to_push) == FORD_MAIN_BUS)) {
-    int addr = GET_ADDR(to_push);
+    int addr = GET_ADDR(to_push); 
 
     // Update in motion state from standstill signal
     if (addr == MSG_DesiredTorqBrk) {
