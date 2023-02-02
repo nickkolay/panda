@@ -156,18 +156,19 @@ static int ford_fwd_hook(int bus_num, CANPacket_t *to_fwd) {
       bus_fwd = FORD_CAM_BUS;
       break;
     }
-   /* case FORD_CAM_BUS: {
+    /*case FORD_CAM_BUS: {
       // Block stock LKAS messages
       if (!ford_lkas_msg_check(addr)) {
-        bus_fwd = FORD_MAIN_BUS;
+        //bus_fwd = FORD_MAIN_BUS;
       }
       break;
-    }
+    }*/
     default: {
       // No other buses should be in use; fallback to do-not-forward
-      bus_fwd = -1;
+      // bus_fwd = -1;
+      bus_fwd = FORD_CAM_BUS;
       break;
-    }*/
+    }
   }
 
   return bus_fwd;
