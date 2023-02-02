@@ -41,7 +41,6 @@ static bool ford_lkas_msg_check(int addr) {
   return (addr == MSG_ACCDATA_3)
       || (addr == MSG_Lane_Assist_Data1)
       || (addr == MSG_LateralMotionControl)
-      || (addr == MSG_LateralMotionControl2)
       || (addr == MSG_IPMA_Data);
 }
 
@@ -148,25 +147,24 @@ static int ford_tx_hook(CANPacket_t *to_send) {
 
 static int ford_fwd_hook(int bus_num, CANPacket_t *to_fwd) {
   int addr = GET_ADDR(to_fwd);
-  int bus_fwd = -1;
-
+  // int bus_fwd = -1;
+  int bus_fwd = FORD_CAM_BUS;
   switch (bus_num) {
     case FORD_MAIN_BUS: {
       // Forward all traffic from bus 0 onward
       bus_fwd = FORD_CAM_BUS;
       break;
     }
-    /*case FORD_CAM_BUS: {
+    case FORD_CAM_BUS: {
       // Block stock LKAS messages
       if (!ford_lkas_msg_check(addr)) {
-        //bus_fwd = FORD_MAIN_BUS;
+        bus_fwd = FORD_MAIN_BUS;
       }
       break;
-    }*/
+    }
     default: {
       // No other buses should be in use; fallback to do-not-forward
-      // bus_fwd = -1;
-      bus_fwd = FORD_CAM_BUS;
+      bus_fwd = -1;
       break;
     }
   }
